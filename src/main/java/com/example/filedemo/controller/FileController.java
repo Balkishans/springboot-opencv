@@ -3,7 +3,7 @@ package com.example.filedemo.controller;
 import com.example.filedemo.extraction.ExtractPdfSignature;
 import com.example.filedemo.payload.UploadFileResponse;
 import com.example.filedemo.service.FileStorageService;
-import com.example.filedemo.service.TempStorageService;
+
 import java.io.File;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -29,8 +29,7 @@ public class FileController {
 
     @Autowired
     private FileStorageService fileStorageService;
-    @Autowired
-    private TempStorageService tempStorageService;
+    
 
     @Autowired
     ServletContext servletContext;
