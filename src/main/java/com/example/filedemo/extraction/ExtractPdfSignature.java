@@ -14,12 +14,9 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.InputStream;
-import java.net.URI;
 import java.util.ArrayList;
 import java.util.List;
 import javax.imageio.ImageIO;
-import javax.servlet.ServletContext;
-import org.apache.commons.io.FileUtils;
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.pdmodel.PDPage;
 
@@ -71,37 +68,7 @@ public class ExtractPdfSignature {
         return filename;
     }
 
-//    public static void main(String args[]) throws Exception {
-//
-//        System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
-//        String filepath = "/home/appcino/Downloads/pdfimages/test/SAMPLE PDF.pdf";
-//        File sourceFile = new File(filepath);
-//        String filename = sourceFile.getName();
-//        int index = filename.indexOf(".pdf");
-//        filename = filename.substring(0, index);
-//        //InputStream ins = new FileInputStream(sourceFile);
-//        List<String> traindata = new ArrayList<>();
-//        boolean flagpdf2img = convertpdftoimage(filename);
-//        if (flagpdf2img) {
-//            File file = new File("/home/appcino/Downloads/pdfimages/train/");
-//            File[] files = file.listFiles();
-//
-//            for (File f : files) {
-//                traindata.add(f.getAbsolutePath());
-//            }
-//            String infile = "/home/appcino/Downloads/pdfimages/temp/" + filename + ".jpeg";
-//            String outfile = "/home/appcino/Downloads/pdfimages/temp/" + filename + "-crop.jpeg";
-//            ObjectMatching objmatch = new ObjectMatching();
-//            boolean flagmatch = objmatch.matchOperation(infile, traindata, outfile);
-//
-//            if (flagmatch) {
-//                String destDir = "/home/appcino/Downloads/pdfimages/result/";
-//                //convertImgToPDF(outfile, filename, destDir);
-//                convertimg2pdf(outfile, filename, destDir);
-//            }
-//        }
-//
-//    }
+
 
     public static boolean convertpdftoimage(File sourceFile) {
         boolean flag = false;
@@ -148,46 +115,8 @@ public class ExtractPdfSignature {
         return flag;
     }
 
-//        public static boolean convertpdftoimage2(String filename) {
-//            boolean flag=false;
-//        try {
-//            String sourceDir = "/home/appcino/Downloads/pdfimages/"+filename+".pdf"; // Pdf files are read from this folder
-//            String destinationDir = "/home/appcino/Downloads/pdfimages/"; // converted images from pdf document are saved here
-//
-//            File sourceFile = new File(sourceDir);
-//            File destinationFile = new File(destinationDir);
-//            if (!destinationFile.exists()) {
-//                destinationFile.mkdir();
-//                System.out.println("Folder Created -> " + destinationFile.getAbsolutePath());
-//            }
-//            if (sourceFile.exists()) {
-//                System.out.println("Images copied to Folder: " + destinationFile.getName());
-//                PDDocument document = PDDocument.load(sourceFile);
-//                PDFRenderer d = new PDFRenderer(document);
-//                int index = document.getNumberOfPages();
-//
-//                String fileName = sourceFile.getName().replace(".pdf", "");
-//                int pageNumber = 1;
-//                for (int i = 0; i <= index - 1; i++) {
-//                    BufferedImage image = d.renderImage(i);
-//                    File outputfile = new File(destinationDir + fileName +  ".jpeg");
-//                    System.out.println("Image Created -> " + outputfile.getName());
-//                    ImageIO.write(image, "jpeg", outputfile);
-//                    pageNumber++;
-//                }
-//                document.close();
-//                flag=true;
-//                
-//                System.out.println("Converted Images are saved at -> " + destinationFile.getAbsolutePath());
-//            } else {
-//                System.err.println(sourceFile.getName() + " File not exists");
-//            }
-//
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
-//        return flag;
-//    }
+
+    
     public static void convertimg2pdf(String imagePath, String fileName, String destDir) throws Exception {
         InputStream in = new FileInputStream(imagePath);
         BufferedImage bimg = ImageIO.read(in);
