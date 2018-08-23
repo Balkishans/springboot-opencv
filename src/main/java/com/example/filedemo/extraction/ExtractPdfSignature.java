@@ -14,6 +14,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.InputStream;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 import javax.imageio.ImageIO;
@@ -21,6 +22,7 @@ import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.pdmodel.PDPage;
 
 import org.opencv.core.Core;
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
 
 /**
@@ -41,14 +43,16 @@ public class ExtractPdfSignature {
         
         System.out.println("remove all space bet filename : "+filename);
         //InputStream ins = new FileInputStream(sourceFile);
-        List<String> traindata = new ArrayList<>();
+        List<String> traindata2 = new ArrayList<>();
         boolean flagpdf2img = convertpdftoimage(resource.getFile());
-        if (flagpdf2img) {
-            File file = new File("/home/appcino/Downloads/pdfimages/train/");
+        if (flagpdf2img) {            
+            
+            File file = new File("/home/appcino/Downloads/sprintbootextractpdf/train/");
+            
             File[] files = file.listFiles();
 
             for (File f : files) {
-                traindata.add(f.getAbsolutePath());
+                traindata2.add(f.getAbsolutePath());
             }
             String path = resource.getFile().getAbsolutePath();
             int lastindex=path.lastIndexOf("/");
@@ -56,11 +60,11 @@ public class ExtractPdfSignature {
             String infileocv = path+"" + filename + ".jpeg";
             String outfileocv = path+"" + filename + "-crop.jpeg";
             ObjectMatching objmatch = new ObjectMatching();
-            boolean flagmatch = objmatch.matchOperation(infileocv, traindata, outfileocv);
+            boolean flagmatch = objmatch.matchOperation(infileocv, traindata2, outfileocv);
             System.out.println("Template Matching :::::"+flagmatch);
             
             if (flagmatch) {
-                String destDir = "/home/appcino/Downloads/pdfimages/result/";
+                //String destDir = "/home/appcino/Downloads/pdfimages/result/";
                 //convertImgToPDF(outfile, filename, destDir);
                 convertimg2pdf(outfileocv, filename, path);
             }
@@ -131,4 +135,16 @@ public class ExtractPdfSignature {
         document.add(image);
         document.close();
     }
+    
+    public String getParentDirectoryFromJar() {
+    String dirtyPath = getClass().getResource("").toString();
+    String jarPath = dirtyPath.replaceAll("^.*file:/", ""); //removes file:/ and everything before it
+    jarPath = jarPath.replaceAll("jar!.*", "jar"); //removes everything after .jar, if .jar exists in dirtyPath
+    jarPath = jarPath.replaceAll("%20", " "); //necessary if path has spaces within
+    if (!jarPath.endsWith(".jar")) { // this is needed if you plan to run the app using Spring Tools Suit play button. 
+        jarPath = jarPath.replaceAll("/classes/.*", "/classes/");
+    }
+    String directoryPath = Paths.get(jarPath).getParent().toString(); //Paths - from java 8
+    return directoryPath;
+}
 }

@@ -19,8 +19,12 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 import java.net.URISyntaxException;
+import java.util.ArrayList;
+import java.util.List;
 import javax.servlet.ServletContext;
 import org.apache.commons.io.FileUtils;
+import org.springframework.core.io.ResourceLoader;
+import org.springframework.core.io.support.ResourcePatternUtils;
 
 @RestController
 public class FileController {
@@ -29,13 +33,22 @@ public class FileController {
 
     @Autowired
     private FileStorageService fileStorageService;
-    
 
     @Autowired
     ServletContext servletContext;
 
+    @Autowired
+    private ResourceLoader resourceLoader;
+
     @PostMapping("/uploadFile")
     public UploadFileResponse uploadFile(@RequestParam("file") MultipartFile file) throws URISyntaxException, IOException, Exception {
+
+//        List<File> traindata=new ArrayList();
+//        Resource[] resources = ResourcePatternUtils.getResourcePatternResolver(resourceLoader).getResources("classpath*:static/train/*.*");
+//        for (Resource r : resources) {
+//            traindata.add(r.getFile());
+//        }
+
         String fileNamedel = fileStorageService.storeFile(file);
 
         Resource resourcedel = fileStorageService.loadFileAsResource(fileNamedel);
@@ -43,14 +56,14 @@ public class FileController {
         String path = resourcedel.getFile().getAbsolutePath();
         int lastindex = path.lastIndexOf("/");
         path = path.substring(0, lastindex + 1);
-        
+
         File destinationFile = new File(path);
         FileUtils.cleanDirectory(destinationFile);
-        
+
         String fileName = fileStorageService.storeFile(file);
         Resource resource = fileStorageService.loadFileAsResource(fileName);
         String filenameret = ExtractPdfSignature.extractSignature(resource);
-        filenameret =filenameret+ ".pdf";
+        filenameret = filenameret + ".pdf";
         String fileDownloadUri = ServletUriComponentsBuilder.fromCurrentContextPath()
                 .path("/downloadFile/")
                 .path(filenameret)

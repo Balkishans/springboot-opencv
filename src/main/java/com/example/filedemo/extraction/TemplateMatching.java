@@ -14,6 +14,8 @@ package com.example.filedemo.extraction;
  *
  * @author appcino
  */
+import java.io.File;
+import java.io.IOException;
 import java.util.List;
 import org.opencv.core.Core;
 import org.opencv.core.Core.MinMaxLocResult;
@@ -24,10 +26,12 @@ import org.opencv.core.Rect;
 import org.opencv.core.Scalar;
 import org.opencv.imgcodecs.Imgcodecs;
 import org.opencv.imgproc.Imgproc;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 class ObjectMatching {
-
-    public boolean matchOperation(String inFile, List<String> templates, String outFile) {
+private static final Logger logger = LoggerFactory.getLogger(TemplateMatching.class);
+    public boolean matchOperation(String inFile, List<String> templates, String outFile) throws IOException {
         boolean flag = false;
         for (String template : templates) {
             System.out.println("matching data  " + inFile);
@@ -99,16 +103,16 @@ class ObjectMatching {
 
 public class TemplateMatching {
 
-    public static void main(String[] args) {
-
-        //System.loadLibrary("opencv_java300");
-        System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
-        String infile = "/home/appcino/Downloads/spring-boot-file-upload-download-rest-api-example-master/uploads/SIG CARD - PR.jpeg";
-        String template = "/home/appcino/Downloads/pdfimages/form3_sig.jpeg";
-        String outfile = "/home/appcino/Downloads/pdfimages/form3_sigtemp3_1_2.jpeg";
-
-        //new MatchingDemo().run(args[0], args[1], args[2], Imgproc.TM_CCOEFF);
-        new ObjectMatching().run(infile, template, outfile, Imgproc.TM_CCOEFF_NORMED);
-    }
+//    public static void main(String[] args) {
+//
+//        //System.loadLibrary("opencv_java300");
+//        System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
+//        String infile = "/home/appcino/Downloads/spring-boot-file-upload-download-rest-api-example-master/uploads/SIG CARD - PR.jpeg";
+//        String template = "/home/appcino/Downloads/pdfimages/form3_sig.jpeg";
+//        String outfile = "/home/appcino/Downloads/pdfimages/form3_sigtemp3_1_2.jpeg";
+//
+//        //new MatchingDemo().run(args[0], args[1], args[2], Imgproc.TM_CCOEFF);
+//        new ObjectMatching().run(infile, template, outfile, Imgproc.TM_CCOEFF_NORMED);
+//    }
 
 }

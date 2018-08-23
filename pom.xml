@@ -9,13 +9,14 @@
     <packaging>jar</packaging>
 
     <name>file-demo</name>
-    <description>Spring Boot File Upload / Download Demo</description>
+    <description>Spring Boot PDF Crop</description>
 
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
         <version>2.0.0.RELEASE</version>
         <relativePath/> <!-- lookup parent from repository -->
+        
     </parent>
 
     <properties>
@@ -28,6 +29,8 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
+            
+            
         </dependency>
 
         <dependency>
@@ -52,7 +55,7 @@
             <groupId>org.apache.pdfbox</groupId>
             <artifactId>pdfbox</artifactId>
             <version>1.8.15</version>
-<!--                        <version>2.0.11</version>-->
+            <!--                        <version>2.0.11</version>-->
         </dependency>
         
         
@@ -62,6 +65,8 @@
             <artifactId>commons-io</artifactId>
             <version>1.3.2</version>
         </dependency>
+        
+        
     </dependencies>
 
     <build>
